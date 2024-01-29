@@ -1,0 +1,80 @@
+﻿@model Student_Management.Models.Student
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Student</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @* <input type="hidden" asp-for="Id" /> *@
+            <div class="form-group">
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" disabled class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input asp-for="Image" type="file" name="files" multiple class="form-control" />
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
+            @{
+                if(Model.Status == false)
+                {
+                    <div class="form-check">
+                        <input asp-for="Status" name="status" type="radio" value="NoAttendanceYet" id="noAttendanceYet" class="form-check-input" checked="checked"/>
+                        <label class="form-check-label" for="noAttendanceYet">Absent</label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Status" name="status" type="radio" value="TookAttendance" id="tookAttendance" class="form-check-input" />
+                        <label class="form-check-label" for="tookAttendance">Present</label>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-check">
+                        <input asp-for="Status" name="status" type="radio" value="NoAttendanceYet" id="noAttendanceYet" class="form-check-input" />
+                        <label class="form-check-label" for="noAttendanceYet">Absent</label>
+                    </div>
+                    <div class="form-check">
+                        <input asp-for="Status" name="status" type="radio" value="TookAttendance" id="tookAttendance" class="form-check-input" checked="checked" />
+                        <label class="form-check-label" for="tookAttendance">Present</label>
+                    </div>
+                }
+            }
+            
+
+            <div class="form-group">
+                <label asp-for="Comment" class="control-label"></label>
+                <textarea asp-for="Comment" class="form-control"></textarea>
+                <span asp-validation-for="Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ClassId" class="control-label"></label>
+                <select asp-for="ClassId" class="form-control" asp-items="ViewBag.ClassId"></select>
+                <span asp-validation-for="ClassId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
